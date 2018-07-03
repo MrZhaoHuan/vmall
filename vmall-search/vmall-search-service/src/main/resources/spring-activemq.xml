@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="messageListener" class="com.zhao.search.message.ItemTopicMessageListener" />
+
+    <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="proxyConnectionFactory"/>
+        <property name="destination" ref="item_topic"/>
+        <property name="messageListener" ref="messageListener" />
+    </bean>
+
+    <bean id="mqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+        <constructor-arg name="brokerURL" value="tcp://192.168.92.129:61616"></constructor-arg>
+    </bean>
+    <bean id="proxyConnectionFactory" class="org.springframework.jms.connection.SingleConnectionFactory">
+        <property name="targetConnectionFactory" ref="mqConnectionFactory"></property>
+    </bean>
+
+    <bean class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg name="name" value="item_queue"></constructor-arg>
+    </bean>
+    <bean id="item_topic" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg name="name" value="item_topic"></constructor-arg>
+    </bean>
+</beans>

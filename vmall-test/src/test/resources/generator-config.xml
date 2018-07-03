@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <commentGenerator >
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/vmall"
+                        userId="root"
+                        password="123">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.zhao.pojo" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.zhao.mapperXml"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zhao.mapper"  targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+
+        <!--<table tableName="tb_content" domainObjectName="Content"/>-->
+        <!--<table tableName="tb_content_category" domainObjectName="ContentCategory"/>-->
+        <!--<table tableName="tb_content_img" domainObjectName="ContentImg"/>-->
+        <!--<table tableName="tb_item" domainObjectName="Item"/>-->
+        <!--<table tableName="tb_item_cat" domainObjectName="ItemCat"/>-->
+        <!--<table tableName="tb_item_desc" domainObjectName="ItemDesc"/>-->
+        <!--<table tableName="tb_item_param" domainObjectName="ItemParam"/>-->
+        <!--<table tableName="tb_item_param_item" domainObjectName="ItemParamItem"/>-->
+        <!--<table tableName="tb_order" domainObjectName="Order"/>-->
+        <!--<table tableName="tb_order_item" domainObjectName="OrderItem"/>-->
+        <!--<table tableName="tb_order_shipping" domainObjectName="OrderShipping"/>-->
+        <!--<table tableName="tb_user" domainObjectName="User"/>-->
+        <table tableName="tb_content" domainObjectName="Content"/>
+    </context>
+</generatorConfiguration>

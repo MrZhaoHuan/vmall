@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">
+    <!-- 包扫描 -->
+    <context:component-scan base-package="com.zhao.web.controller"/>
+    <!-- Spring MVC为@Controller分发请求所必需的 -->
+    <mvc:annotation-driven/>
+
+    <context:property-placeholder location="classpath:index-search.properties"></context:property-placeholder>
+
+    <mvc:resources mapping="/css/**" location="css/"/>
+    <mvc:resources mapping="/js/**" location="js/"/>
+    <mvc:resources mapping="/images/**" location="images/"/>
+
+    <!-- 根据视图名，查找spring容器中对应的视图对象 来解析 -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+    <!-- internalResourceViewResolver视图解析器   默认的order属性值是:Integer.MAX_VALUE,所以最后才会轮到它来解析 -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="suffix" value=".jsp"></property>
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+    </bean>
+
+    <!-- json视图对象 -->
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+
+    <!-- 消费方应用名，用于计算依赖关系 -->
+    <dubbo:application name="consumer-portal-web"  />
+    <dubbo:registry protocol="zookeeper" address="192.168.92.128:2181" />
+    <!-- 增加引用远程服务配置 -->
+    <dubbo:reference id="searchService" interface="com.zhao.search.service.SearchService"/>
+
+        <!--异常处理器 -->
+        <!--<bean class="com.zhao.web.exception.SpringExceptionResolver"/>-->
+  </beans>

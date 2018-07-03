@@ -1,0 +1,1 @@
+![](https://github.com/MrZhaoHuan/vmall/blob/master/design/soa.png)
